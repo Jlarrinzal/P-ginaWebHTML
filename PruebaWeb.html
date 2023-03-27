@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejemplo de Prueba</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#btn1").click(function() {
+                alert("Usuario: " + $("#user1").val());
+            });
+            $("#btn2").click(function(){
+                $("#tabletitle").text("Fallo :(")
+                $("#tabletitle").show()
+                $("#table").hide()
+                $("#bodytable").empty()
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'https://github.com/repos/' + $('#user').val(),
+                    data: {get_param: 'value'},
+                    dataType: 'text',
+                    success: function (data) {
+                        var json = $.parseJSON(data);
+
+                        $("#table").show();
+                        $("#tabletitle").text($("#user").val() + "Tus repositorios:");
+
+                        for (var i = 1; i < json.length; i++ ){
+                            $("#bodytable").append('<tr>' +
+                                '<td>' + json[i].name + '</td>' +
+                            '<td> + json[i].bio + </td>' +
+                            '<td>' + json[i].followers + '</td>' + '</tr>');
+                        }
+                    }
+                });
+            });
+        });
+
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body style = "background-color: lightblue;">
+
+<div class="jumbotron text-center">
+    <h1>Web de Prueba Jlarrinzal</h1>
+    <p>Holaaaa!!</p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Buenos días :D</h3>
+            <p>Espacio para repositorio de GitHub</p>
+            <nav class="navbar">
+                <form class="form-inline">
+                    <input id="user1" class="form-control mr-sm-2" type="text" placeholder="Usuario">
+                    <button id="btn1">Show Text</button>
+                </form>
+            </nav>
+        </div>
+        <h4 id="tabletitle" class = "content"> </h4>
+        <div id = "table" class="container col-sm-6">
+            <h2>Tabla GitHub</h2>
+            <p>Información totalmente relevante:</p>
+            <p>Usuario Github: <input id = "user" class="form-control mr-sm-2" type="text" placeholder="Usuario"> </p>
+            <button id ="btn2">Show repositories</button>
+            <table class="table table-striped">
+                <thread>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Identificadores</th>
+                    <th>Followers</th>
+                </tr>
+                    <tbody id="bodytable">
+                    </tbody>
+                </thread>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
