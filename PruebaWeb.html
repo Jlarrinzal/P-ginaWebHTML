@@ -21,20 +21,20 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: 'https://github.com/repos/' + $('#user').val(),
+                    url: 'https://api.github.com/users/' + $('#user').val() + '/repos',
                     data: {get_param: 'value'},
                     dataType: 'text',
                     success: function (data) {
                         var json = $.parseJSON(data);
 
                         $("#table").show();
-                        $("#tabletitle").text($("#user").val() + "Tus repositorios:");
+                        $("#tabletitle").text("Los repositorios de " + $("#user").val() + " :");
 
                         for (var i = 1; i < json.length; i++ ){
                             $("#bodytable").append('<tr>' +
                                 '<td>' + json[i].name + '</td>' +
-                            '<td> + json[i].bio + </td>' +
-                            '<td>' + json[i].followers + '</td>' + '</tr>');
+                            '<td>' + json[i].description + '</td>' +
+                            '<td>' + json[i].stargazers_count + '</td>' + '</tr>');
                         }
                     }
                 });
@@ -68,11 +68,9 @@
         </div>
         <h4 id="tabletitle" class = "content"> </h4>
         <div id = "table" class="container col-sm-6">
-            <h2>Tabla GitHub</h2>
-            <p>Información totalmente relevante:</p>
-            <p>Usuario Github: <input id = "user" class="form-control mr-sm-2" type="text" placeholder="Usuario"> </p>
+            <input id = "user" class="form-control col-sm-6" type="text" placeholder="Usuario">
             <button id ="btn2">Show repositories</button>
-            <table class="table table-striped">
+            <table class="table table-striped col-sm-6">
                 <thread>
                 <tr>
                     <th>Nombre</th>
